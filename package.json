@@ -1,6 +1,6 @@
 {
-  "name": "@elartedelcodigo/node-check",
-  "version": "1.0.1",
+  "name": "@elartedelcodigo/check-node-version",
+  "version": "1.0.0",
   "description": "Check node version",
   "scripts": {
     "clean-build": "rm -rf ./build",
@@ -16,11 +16,11 @@
     "README.md"
   ],
   "bin": {
-    "node-check": "bin/node-check"
+    "check-node-version": "bin/check-node-version"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlexQuispe/node-check.git"
+    "url": "git+https://github.com/AlexQuispe/check-node-version.git"
   },
   "keywords": [
     "check",
@@ -30,9 +30,9 @@
   "author": "Alex Quispe <q.wilmer.alex@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AlexQuispe/node-check/issues"
+    "url": "https://github.com/AlexQuispe/check-node-version/issues"
   },
-  "homepage": "https://github.com/AlexQuispe/node-check#readme",
+  "homepage": "https://github.com/AlexQuispe/check-node-version#readme",
   "devDependencies": {
     "@tsconfig/node16": "1.0.2",
     "@types/node": "17.0.39",

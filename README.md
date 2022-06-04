@@ -1,4 +1,4 @@
-# node-check
+# check-node-version
 
 Verifica que la versión de node sea la correcta cuando se levanta una aplicación de node.
 
@@ -7,7 +7,7 @@ Puede verificar las siguientes aplicaciones: `node`, `npm` y `yarn` las cuales d
 ## Instalación
 
 ```bash
-npm install -g @elartedelcodigo/node-check
+npm install -g @elartedelcodigo/check-node-version
 ```
 
 ## Ejemplo:
@@ -31,7 +31,7 @@ Si en el archivo `package.json` tenemos la siguiente configuración:
 Luego desde la raiz del proyecto ejecutamos el siguiente comando:
 
 ```bash
-node-check
+check-node-version
 ```
 
 Resultado si tenemos activada la versión correcta de node:
