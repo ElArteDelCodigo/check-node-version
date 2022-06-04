@@ -1,7 +1,7 @@
 {
   "name": "@elartedelcodigo/check-node-version",
-  "version": "1.0.0",
-  "description": "Check node version",
+  "version": "1.0.1",
+  "description": "Verifica que la versión de node sea la correcta cuando se levanta una aplicación.",
   "scripts": {
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
