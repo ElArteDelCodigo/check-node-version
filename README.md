@@ -26,6 +26,8 @@ Si en el archivo `package.json` tenemos la siguiente configuración:
 }
 ```
 
+**Nota.-** Para utilizar la versión correcta puede consultar [https://www.npmjs.com/package/semver](https://www.npmjs.com/package/semver)
+
 Luego desde la raiz del proyecto ejecutamos el siguiente comando:
 
 ```bash

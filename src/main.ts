@@ -1,5 +1,5 @@
 import { exec, ExecException } from "child_process";
-import compareVersions from "compare-versions";
+import semver from "semver";
 import path from "path";
 
 const APP_LIST = ["node", "npm", "yarn"];
@@ -38,8 +38,7 @@ async function versionValid(appName: string): Promise<boolean> {
     packageJson.engines?.[appName] || packageJson.volta?.[appName];
 
   const isValid =
-    !requiredVersion ||
-    compareVersions.satisfies(currentVersion, requiredVersion);
+    !requiredVersion || semver.satisfies(currentVersion, requiredVersion);
 
   const result = isValid
     ? `\x1b[92m${appName}: ${currentVersion}\x1b[0m\n`
@@ -95,6 +94,11 @@ Ejemplo:
   }
 
   let isValid = true;
+
+  const packageJson = await getPackageJson();
+  process.stdout.write(
+    `\x1b[94m${packageJson.name}: ${packageJson.version}\x1b[0m\n`
+  );
 
   for (const appItem of appList) {
     if (!(await versionValid(appItem))) isValid = false;
