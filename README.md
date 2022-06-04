@@ -7,7 +7,7 @@ Puede verificar las siguientes aplicaciones: `node`, `npm` y `yarn` las cuales d
 ## Instalación
 
 ```bash
-npm install -g node-check
+npm install -g @elartedelcodigo/node-check
 ```
 
 ## Ejemplo:

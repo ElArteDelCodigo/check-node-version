@@ -1,5 +1,5 @@
 {
-  "name": "node-check",
+  "name": "@elartedelcodigo/node-check",
   "version": "1.0.0",
   "description": "Check node version",
   "scripts": {
