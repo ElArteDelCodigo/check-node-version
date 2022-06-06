@@ -41,8 +41,8 @@ async function versionValid(appName: string): Promise<boolean> {
     !requiredVersion || semver.satisfies(currentVersion, requiredVersion);
 
   const result = isValid
-    ? `\x1b[92m${appName}: ${currentVersion}\x1b[0m\n`
-    : `\x1b[91m${appName}: ${currentVersion}\x1b[0m \x1b[93m(versión requerida: ${requiredVersion})\x1b[0m\n`;
+    ? `\x1b[32m${appName}: ${currentVersion}\x1b[0m\n`
+    : `\x1b[31m${appName}: ${currentVersion}\x1b[0m \x1b[33m(versión requerida: ${requiredVersion})\x1b[0m\n`;
 
   process.stdout.write(result);
   return isValid;
@@ -76,20 +76,20 @@ async function init() {
   const appList = await getApps();
 
   if (appList.length === 0) {
-    const msg = `\x1b[92mNada que validar.\x1b[0m
+    const msg = `\x1b[32m\n¡Ups! ¿estamos dentro del proyecto?\x1b[0m
 
-Puede especificar la versión de node desde el archivo package.json
+Si es asi, puedes especificar la versión de \x1b[36mnode\x1b[0m, \x1b[36mnpm\x1b[0m y/o \x1b[36myarn\x1b[0m dentro del archivo \x1b[36mpackage.json\x1b[0m
 
 Ejemplo:
 
-{
-  "name": "project",
-  ...
+\x1b[36m{
+  "name": "my-project",
+  "version": "1.0.0",
   "engines": {
     "node": "^16",
     "npm": "^8"
   }
-}\n`;
+}\x1b[0m\n\n`;
     return process.stdout.write(msg);
   }
 
@@ -104,7 +104,12 @@ Ejemplo:
     if (!(await versionValid(appItem))) isValid = false;
   }
 
-  if (!isValid) process.exit(1);
+  if (!isValid) {
+    process.stdout.write(`\n\x1b[33m¡Ups! no podemos continuar.\n\nVerifica que la versión requerida se encuentre activada (Ej.: node --version) e inténtalo nuevamente.\x1b[0m\n\n`);
+    process.exit(1);
+  }
+
+  process.stdout.write(`\n\x1b[94mParece que todo está en orden, continuemos...\x1b[0m\n\n`);
 }
 
 init().catch((e) => {
