@@ -106,7 +106,7 @@ async function init() {
   if (appList.length === 0) {
     const infoMsg = `\x1b[32m\n¡Ups! ¿estamos dentro del proyecto?\x1b[0m
 
-Si es así, puedes especificar la versión de:
+Si es así, puedes especificar la versión requerida de:
 
   - \x1b[36mnode\x1b[0m
   - \x1b[36mnpm\x1b[0m
@@ -126,6 +126,10 @@ Ejemplo:
         "npm": "^8"
       }
     }\x1b[0m
+
+Formatos válidos (revisar el método satisfies):
+
+    \x1b[36mhttps://github.com/npm/node-semver#usage\x1b[0m
 
 `;
     return process.stdout.write(infoMsg);

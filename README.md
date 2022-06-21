@@ -81,7 +81,7 @@ Y en el caso de no encontrares dentro de la carpeta correcta:
 
 ¡Ups! ¿estamos dentro del proyecto?
 
-Si es así, puedes especificar la versión de:
+Si es así, puedes especificar la versión requerida de:
 
   - node
   - npm
@@ -101,5 +101,9 @@ Ejemplo:
         "npm": "^8"
       }
     }
+
+Formatos válidos (revisar el método satisfies):
+
+    https://github.com/npm/node-semver#usage
 
 ```
