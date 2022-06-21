@@ -75,7 +75,7 @@ Comprueba la versión:
 
 ```
 
-Y en el caso de no encontrares dentro de la carpeta correcta:
+Y en el caso de no encontrarse dentro de la carpeta correcta:
 
 ```bash
 
