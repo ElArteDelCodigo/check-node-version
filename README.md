@@ -77,7 +77,7 @@ Comprueba la versión:
 
 Y en el caso de no encontrares dentro de la carpeta correcta:
 
-```json
+```bash
 
 ¡Ups! ¿estamos dentro del proyecto?
 
