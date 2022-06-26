@@ -2,7 +2,15 @@
 
 Verifica que la versión de node sea la correcta cuando se levanta una aplicación.
 
-Puede verificar las siguientes aplicaciones: `node`, `npm` y `yarn` las cuales deben ser especificadas en el archivo `package.json`.
+Puede verificar cualquiera de las siguientes aplicaciones:
+
+- `node`
+- `npm`
+- `yarn`
+- `pm2`
+- `sequelize`
+
+las cuales deben ser especificadas en el archivo `package.json`.
 
 ## Instalación
 
@@ -27,24 +35,75 @@ Si en el archivo `package.json` tenemos la siguiente configuración:
 
 **Nota.-** Para utilizar la versión correcta puede consultar [https://www.npmjs.com/package/semver](https://www.npmjs.com/package/semver)
 
-Luego desde la raiz del proyecto ejecutamos el siguiente comando:
+Luego desde la raíz del proyecto ejecutamos el siguiente comando:
 
 ```bash
 check-node-version
 ```
 
-Resultado si tenemos activada la versión correcta de node:
+Resultado si tenemos instalada la versión correcta:
 
 ```bash
 my-project: 1.0.0
-node: 16.13.2
-npm: 8.12.1
+node: 16.15.1 ✓  versión requerida: ^16
+npm:   8.12.2 ✓  versión requerida: ^8
+
+Parece que todo está en orden, continuemos...
+
 ```
 
 en caso contrario:
 
 ```bash
 my-project: 1.0.0
-node: 12.22.7 (versión requerida: ^16)
-npm: 6.14.17 (versión requerida: ^8)
+node: 14.18.3 ✕  versión requerida: ^16
+npm:   7.24.2 ✕  versión requerida: ^8
+
+¡Ups! no podemos continuar.
+
+Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.
+
+Ejemplo:
+
+    - para instalar node: nvm install 16.15.1   (https://github.com/nvm-sh/nvm)
+    - para instalar npm:  npm install -g npm@8.12.2
+
+Comprueba la versión:
+
+    node -v
+    npm -v
+
+```
+
+Y en el caso de no encontrarse dentro de la carpeta correcta:
+
+```bash
+
+¡Ups! ¿estamos dentro del proyecto?
+
+Si es así, puedes especificar la versión requerida de:
+
+  - node
+  - npm
+  - yarn
+  - pm2
+  - sequelize
+
+dentro del archivo package.json
+
+Ejemplo:
+
+    {
+      "name": "my-project",
+      "version": "1.0.0",
+      "engines": {
+        "node": "^16",
+        "npm": "^8"
+      }
+    }
+
+Formatos válidos (revisar el método satisfies):
+
+    https://github.com/npm/node-semver#usage
+
 ```
