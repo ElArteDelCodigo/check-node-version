@@ -1,4 +1,13 @@
-# check-node-version
+<h1 align="center">Check node version</h1>
+
+<p align="center">
+  <a href="./">
+    <img src="https://img.shields.io/badge/release-v1.1.4-blue" alt="release">
+  </a>
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/insacjs/insac.svg" alt="License: MIT" />
+  </a>
+</p>
 
 Verifica que la versión de node sea la correcta cuando se levanta una aplicación.
 
