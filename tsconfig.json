@@ -2,8 +2,15 @@
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "target": "es2015",
-    "outDir": "build"
+    "outDir": "build",
+    "typeRoots": ["src/types/index.d.ts", "./node_modules/@types"],
+    "types": ["node"],
+    "removeComments": true,
+    "strictNullChecks": true
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "files": true
+  }
 }
