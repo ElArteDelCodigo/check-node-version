@@ -2,6 +2,9 @@ import { exec, ExecException } from 'child_process';
 import semver from 'semver';
 import path from 'path';
 
+if (!String.prototype.padEnd) String.prototype.padEnd = function() { return this.toString() }
+if (!String.prototype.padStart) String.prototype.padStart = function() { return this.toString() }
+
 const APP_LIST = ['node', 'npm', 'yarn', 'sequelize', 'pm2'];
 const PROJECT_PATH = process.cwd();
 
