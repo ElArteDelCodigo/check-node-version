@@ -1,8 +1,11 @@
-import { exec, ExecException } from "child_process";
-import semver from "semver";
-import path from "path";
+import { exec, ExecException } from 'child_process';
+import semver from 'semver';
+import path from 'path';
 
-const APP_LIST = ["node", "npm", "yarn", "sequelize", "pm2"];
+if (!String.prototype.padEnd) String.prototype.padEnd = function() { return this.toString() }
+if (!String.prototype.padStart) String.prototype.padStart = function() { return this.toString() }
+
+const APP_LIST = ['node', 'npm', 'yarn', 'sequelize', 'pm2'];
 const PROJECT_PATH = process.cwd();
 
 const OK = `${process.platform === 'linux' ? '\u2713' : ''}`;
@@ -18,14 +21,14 @@ const cmd = (command: string, executePath: string): Promise<string> => {
       (error: ExecException | null, stdout: string, stderr: string) => {
         if (error) reject(stderr);
         if (!error) resolve(stdout);
-      }
+      },
     );
   });
 };
 
 async function getPackageJson() {
   try {
-    const packageJsonPath = path.resolve(PROJECT_PATH, "package.json");
+    const packageJsonPath = path.resolve(PROJECT_PATH, 'package.json');
     const packageJson = await import(packageJsonPath);
     return packageJson;
   } catch (e) {
@@ -39,7 +42,7 @@ async function getCurrentVersion(appName: string): Promise<string> {
       .trim()
       .split('\n')
       .pop();
-    return currentVersion ? currentVersion.trim().replace("v", "") : '';
+    return currentVersion ? currentVersion.trim().replace('v', '') : '';
   } catch (e) {
     return '';
   }
@@ -67,9 +70,11 @@ async function versionValid(appName: string): Promise<boolean> {
   const isValid =
     !requiredVersion || semver.satisfies(currentVersion, requiredVersion);
 
+  const appNamePadded = (appName + ':').padEnd(padLength, ' ');
+  const currentVersionPadded = currentVersion.padStart(7, ' ');
   const resultMsg = isValid
-    ? `\x1b[32m${(appName + ':').padEnd(padLength, ' ')} ${currentVersion.padStart(7, ' ')} ${OK}  versión requerida: ${requiredVersion}\x1b[0m\n`
-    : `\x1b[31m${(appName + ':').padEnd(padLength, ' ')} ${currentVersion.padStart(7, ' ')} ${FAIL}  versión requerida: ${requiredVersion}\x1b[0m\n`;
+    ? `\x1b[32m${appNamePadded} ${currentVersionPadded} ${OK}  versión requerida: ${requiredVersion}\x1b[0m\n`
+    : `\x1b[31m${appNamePadded} ${currentVersionPadded} ${FAIL}  versión requerida: ${requiredVersion}\x1b[0m\n`;
 
   process.stdout.write(resultMsg);
   return isValid;
@@ -92,8 +97,8 @@ async function getApps(): Promise<string[]> {
 async function init() {
   // SHOW APP VERSION
   if (
-    process.argv.join(" ").includes(" --version") ||
-    process.argv.join(" ").includes(" -v")
+    process.argv.join(' ').includes(' --version') ||
+    process.argv.join(' ').includes(' -v')
   ) {
     const version = await getVersion();
     return process.stdout.write(`${version}\n`);
@@ -156,27 +161,27 @@ Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.
 
     if (appList.includes('node')) {
       errorMsg += `\x1b[36m
-    - para instalar ${'node:'.padEnd(padLength, ' ')} nvm install 16.15.1\x1b[33m   (https://github.com/nvm-sh/nvm)`
+    - para instalar ${'node:'.padEnd(padLength, ' ')} nvm install 16.15.1\x1b[33m   (https://github.com/nvm-sh/nvm)`;
     }
 
     if (appList.includes('npm')) {
       errorMsg += `\x1b[36m
-    - para instalar ${'npm:'.padEnd(padLength, ' ')} npm install -g npm@8.12.2\x1b[33m`
+    - para instalar ${'npm:'.padEnd(padLength, ' ')} npm install -g npm@8.12.2\x1b[33m`;
     }
 
     if (appList.includes('yarn')) {
       errorMsg += `\x1b[36m
-    - para instalar ${'yarn:'.padEnd(padLength, ' ')} npm install -g yarn@1.22.19\x1b[33m`
+    - para instalar ${'yarn:'.padEnd(padLength, ' ')} npm install -g yarn@1.22.19\x1b[33m`;
     }
 
     if (appList.includes('sequelize')) {
       errorMsg += `\x1b[36m
-    - para instalar ${'sequelize:'.padEnd(padLength, ' ')} npm install -g sequelize-cli@6.4.1\x1b[33m`
+    - para instalar ${'sequelize:'.padEnd(padLength, ' ')} npm install -g sequelize-cli@6.4.1\x1b[33m`;
     }
 
     if (appList.includes('pm2')) {
       errorMsg += `\x1b[36m
-    - para instalar ${'pm2:'.padEnd(padLength, ' ')} npm install -g pm2@5.2.0\x1b[33m`
+    - para instalar ${'pm2:'.padEnd(padLength, ' ')} npm install -g pm2@5.2.0\x1b[33m`;
     }
 
     errorMsg += `\x1b[36m
@@ -186,27 +191,27 @@ Comprueba la versión:
 
     if (appList.includes('node')) {
       errorMsg += `\x1b[36m
-    node -v\x1b[33m`
+    node -v\x1b[33m`;
     }
 
     if (appList.includes('npm')) {
       errorMsg += `\x1b[36m
-    npm -v\x1b[33m`
+    npm -v\x1b[33m`;
     }
 
     if (appList.includes('yarn')) {
       errorMsg += `\x1b[36m
-    yarn -v\x1b[33m`
+    yarn -v\x1b[33m`;
     }
 
     if (appList.includes('sequelize')) {
       errorMsg += `\x1b[36m
-    sequelize -v\x1b[33m`
+    sequelize -v\x1b[33m`;
     }
 
     if (appList.includes('pm2')) {
       errorMsg += `\x1b[36m
-    pm2 -v\x1b[33m`
+    pm2 -v\x1b[33m`;
     }
 
     process.stdout.write(`\x1b[33m${errorMsg}\n\n\x1b[0m`);
