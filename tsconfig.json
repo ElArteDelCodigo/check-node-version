@@ -4,7 +4,7 @@
     "target": "es2015",
     "outDir": "build",
     "typeRoots": ["src/types/index.d.ts", "./node_modules/@types"],
-    "types": ["node"],
+    "types": ["node", "jest"],
     "removeComments": true,
     "strictNullChecks": true
   },

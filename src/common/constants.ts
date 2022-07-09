@@ -1,1 +1,1 @@
-export const APP_LIST = ['node', 'npm', 'yarn', 'sequelize-cli', 'pm2'];
+export const APP_LIST = ['node', 'npm', 'yarn', 'pm2', 'sequelize-cli'];
