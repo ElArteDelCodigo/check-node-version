@@ -2,10 +2,10 @@
 
 <p align="center">
   <a href="./">
-    <img src="https://img.shields.io/badge/release-v1.1.4-blue" alt="release">
+    <img src="https://img.shields.io/github/v/release/ElArteDelCodigo/check-node-version" alt="release">
   </a>
   <a href="./LICENSE">
-    <img src="https://img.shields.io/github/license/insacjs/insac.svg" alt="License: MIT" />
+    <img src="https://img.shields.io/github/license/ElArteDelCodigo/check-node-version" alt="License: MIT" />
   </a>
 </p>
 
