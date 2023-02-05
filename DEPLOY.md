@@ -11,6 +11,10 @@ Para subir una actualización antes debemos incrementar la versión:
 ```bash
 # Registramos una mejora. [1.0.0 === major.minor.patch]
 npm version patch
+
+# Guardamos los cambios
+git push
+git push --tags
 ```
 
 Ahora si, publicamos la nueva versión.
