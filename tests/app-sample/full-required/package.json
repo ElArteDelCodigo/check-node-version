@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "16.16.0",
-    "npm": "8.13.2",
-    "yarn": "1.22.19",
-    "pm2": "5.2.0",
-    "sequelize-cli": "6.4.1"
+    "node": "22.19.0",
+    "npm": "10.9.3",
+    "yarn": "1.22.22",
+    "pm2": "6.0.8",
+    "sequelize-cli": "6.6.3"
   }
 }
