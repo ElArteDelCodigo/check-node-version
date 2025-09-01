@@ -131,17 +131,22 @@ export class Project {
 
   private printCheckResult(appList: Array<AppCheckResultItem>) {
     const nameWidth =
-      Math.max(...appList.map((i) => i.name.length), 'Paquete'.length) + 2;
+      Math.max(...appList.map((i) => i.name.length), 'Paquete'.length) + 1;
     const currentWidth =
-      Math.max(...appList.map((i) => i.current.length), 'Actual'.length) + 2;
+      Math.max(
+        ...appList.map((i) => i.current.length),
+        'Versión actual'.length,
+      ) + 1;
     const requiredWidth =
-      Math.max(...appList.map((i) => i.required.length), 'Requerida'.length) +
-      2;
+      Math.max(
+        ...appList.map((i) => i.required.length),
+        'Versión requerida'.length,
+      ) + 1;
 
     const header =
       ` ${'Paquete'.padEnd(nameWidth)}│` +
-      ` ${'Actual'.padEnd(currentWidth)}│` +
-      ` ${'Requerida'.padEnd(requiredWidth)}│ Cumple \n`;
+      ` ${'Versión actual'.padEnd(currentWidth)}│` +
+      ` ${'Versión requerida'.padEnd(requiredWidth)}│ Estado \n`;
     process.stdout.write(lightBlue + header);
 
     const line =

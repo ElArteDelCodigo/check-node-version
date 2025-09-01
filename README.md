@@ -118,10 +118,10 @@ $ npm install
 
 /projects/app/package.json
 
- Paquete  │ Actual   │ Requerida  │ Cumple
-──────────┼──────────┼────────────┼────────
- node     │ 22.19.0  │ ^22        │ ✓
- npm      │ 10.9.3   │ >=10       │ ✓
+ Paquete │ Versión actual │ Versión requerida │ Estado
+─────────┼────────────────┼───────────────────┼────────
+ node    │ 22.19.0        │ ^22               │ ✓
+ npm     │ 10.9.3         │ >=10              │ ✓
 
 ✓ Todas las dependencias cumplen con los requisitos.
 
