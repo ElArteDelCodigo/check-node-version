@@ -81,6 +81,7 @@ El binario expuesto es `check-node-version` y apunta a `build/main`.
   # Ejemplo: probar con Node 18
   nvm use 18
   npm i -g .
+
   # En el otro proyecto (bajo Node 18)
   check-node-version
   ```

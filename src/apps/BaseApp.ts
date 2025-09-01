@@ -35,24 +35,6 @@ export abstract class BaseApp {
     return semver.satisfies(this.currentVersion, this.requiredVersion);
   }
 
-  printCheckValidMessage(padLength: number): void {
-    const appNamePadded = (this.name + '').padEnd(padLength, ' ');
-    const currentVersionPadded = this.currentVersion.padStart(8, ' ');
-    const requiredVersionPadded = this.requiredVersion.padStart(8, ' ');
-    process.stdout.write(
-      `${green}${appNamePadded} actual: ${currentVersionPadded} requerida: ${requiredVersionPadded} ${OK}${reset}\n`,
-    );
-  }
-
-  printCheckErrorMessage(padLength: number): void {
-    const appNamePadded = (this.name + '').padEnd(padLength, ' ');
-    const currentVersionPadded = this.currentVersion.padStart(8, ' ');
-    const requiredVersionPadded = this.requiredVersion.padStart(8, ' ');
-    process.stdout.write(
-      `${red}${appNamePadded} actual: ${currentVersionPadded} requerida: ${requiredVersionPadded} ${FAIL}${reset}\n`,
-    );
-  }
-
   getInstallMsg(): string {
     return `npm install -g ${this.name}@1.0.0`;
   }

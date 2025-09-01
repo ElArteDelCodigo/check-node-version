@@ -13,7 +13,6 @@
   <a href="#uso">
     <img src="https://img.shields.io/badge/CLI-ready-success" alt="CLI ready" />
   </a>
-  
 </p>
 
 CLI para validar que las versiones de tus herramientas coincidan con lo declarado en `package.json` (`engines`). Útil para garantizar entornos coherentes en desarrollo y CI/CD.
