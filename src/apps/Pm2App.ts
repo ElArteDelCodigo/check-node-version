@@ -6,6 +6,6 @@ export class Pm2App extends BaseApp {
   }
 
   getInstallMsg(): string {
-    return 'npm install -g pm2@5.2.0';
+    return 'npm install -g pm2@6.0.8';
   }
 }

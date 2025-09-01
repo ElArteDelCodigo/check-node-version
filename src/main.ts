@@ -1,4 +1,6 @@
 import { Project } from './models/Project';
+import fs from 'fs';
+import path from 'path';
 
 if (!String.prototype.padEnd) {
   String.prototype.padEnd = function () {
@@ -14,8 +16,11 @@ if (!String.prototype.padStart) {
 
 async function getVersion(): Promise<string> {
   try {
-    return (await import(`${__dirname}/../package.json`)).version;
-  } catch (e) {
+    const pkgPath = path.join(__dirname, '..', 'package.json');
+    const raw = await fs.promises.readFile(pkgPath, 'utf8');
+    const pkg = JSON.parse(raw) as PackageJson;
+    return pkg.version ?? '';
+  } catch (_e) {
     return '';
   }
 }
@@ -34,13 +39,8 @@ async function init() {
   const project = new Project(process.cwd());
   await project.initialize();
 
-  if (project.requiredApps.length === 0) {
-    project.printSample();
-    process.exit(0);
-  }
-
-  const isValid = await project.checkVersion();
-  if (!isValid) {
+  const { isValid, pathValid } = await project.checkVersion();
+  if (pathValid && !isValid) {
     process.exit(1);
   }
 }

@@ -6,7 +6,7 @@ export class NodeApp extends BaseApp {
   }
 
   getInstallMsg(): string {
-    return 'nvm install 16.15.1';
+    return 'nvm install 22.19.0';
   }
 
   getInstallInfoMsg(): string {

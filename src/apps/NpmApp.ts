@@ -6,6 +6,6 @@ export class NpmApp extends BaseApp {
   }
 
   getInstallMsg(): string {
-    return 'npm install -g npm@8.12.2';
+    return 'npm install -g npm@10.9.3';
   }
 }

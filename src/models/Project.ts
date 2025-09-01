@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import {
   BaseApp,
   NodeApp,
@@ -8,22 +9,32 @@ import {
   YarnApp,
 } from '../apps';
 import { APP_LIST } from '../common/constants';
+import { FAIL, OK } from '../tools/Util';
+import { bold, green, lightBlue, magenta, red, reset } from '../tools/colors';
 
 export class Project {
   projectPath: string;
   name: string;
   version: string;
   requiredApps: BaseApp[];
+  nodeProject: boolean;
 
   constructor(projectPath: string) {
     this.projectPath = projectPath;
     this.version = '';
     this.name = '';
     this.requiredApps = [];
+    this.nodeProject = false;
   }
 
   async initialize() {
     const packageJson = await this.getPackageJsonValue();
+    const nodeProject = !!packageJson;
+    this.nodeProject = nodeProject;
+
+    if (!nodeProject) {
+      return;
+    }
 
     if (packageJson.name) {
       this.name = packageJson.name;
@@ -53,7 +64,7 @@ export class Project {
       if (key === 'sequelize-cli') app = new SequelizeCliApp();
 
       if (app) {
-        await app.initialize(engines[key]);
+        await app.initialize(engines[key], this.projectPath);
         appSelectedList.push(app);
       }
     }
@@ -61,125 +72,137 @@ export class Project {
     return appSelectedList;
   }
 
-  private async getPackageJsonValue(): Promise<PackageJson> {
+  private async getPackageJsonValue(): Promise<PackageJson | null> {
     try {
       const packageJsonPath = path.resolve(this.projectPath, 'package.json');
-      const packageJson = await import(packageJsonPath);
+      const raw = await fs.promises.readFile(packageJsonPath, 'utf8');
+      const packageJson = JSON.parse(raw) as PackageJson;
       return packageJson;
-    } catch (e) {
-      return {};
+    } catch (_e) {
+      return null;
     }
   }
 
-  getVersion() {
-    return this.version;
-  }
+  async checkVersion(): Promise<{ isValid: boolean; pathValid: boolean }> {
+    this.printProjectInfo();
 
-  getName() {
-    return this.name;
-  }
+    if (!this.nodeProject) {
+      this.printNoProjectValid();
+      this.printLineBreack();
+      this.printNoChecksRequired(green);
+      return { isValid: true, pathValid: false };
+    }
 
-  private getPadLength() {
-    const padLength =
-      this.requiredApps.reduce(
-        (prev, curr) => (curr.name.length > prev ? curr.name.length : prev),
-        0,
-      ) + 1;
-    return padLength;
-  }
-
-  async checkVersion(): Promise<boolean> {
-    let isValid = true;
-    const padLength = this.getPadLength();
-
-    this.printInfo();
-
+    const appList: Array<AppCheckResultItem> = [];
     for (const app of this.requiredApps) {
       const appIsValid = await app.isValid();
-
-      if (appIsValid) {
-        app.printCheckValidMessage(padLength);
-        continue;
-      }
-
-      app.printCheckErrorMessage(padLength);
-      isValid = false;
+      appList.push({
+        name: app.name,
+        current: app.currentVersion,
+        required: app.requiredVersion,
+        isValid: appIsValid,
+      });
     }
 
-    this.printLineBreack();
-
-    if (isValid) {
-      this.printSuccessCheck();
+    if (appList.length > 0) {
+      this.printLineBreack();
+      this.printCheckResult(appList);
     }
 
-    if (!isValid) {
-      this.printErrorCheck();
+    if (appList.length === 0) {
+      this.printNoAppsDetected();
+      this.printSample();
+      this.printNoChecksRequired(green);
     }
 
-    this.printLineBreack();
+    const isValid = appList.every((item) => item.isValid);
+    return { isValid, pathValid: true };
+  }
 
-    return isValid;
+  private printNoProjectValid() {
+    const msg = `${lightBlue}\vEsta ubicación no corresponde a un proyecto de NodeJS\n${reset}`;
+    process.stdout.write(msg);
+  }
+
+  private printNoAppsDetected() {
+    const msg = `${lightBlue}\vNo se encontraron dependencias requeridas en el campo "engines" del archivo ${reset}${bold}package.json${reset} \n${reset}`;
+    process.stdout.write(msg);
+  }
+
+  private printCheckResult(appList: Array<AppCheckResultItem>) {
+    const nameWidth =
+      Math.max(...appList.map((i) => i.name.length), 'Paquete'.length) + 2;
+    const currentWidth =
+      Math.max(...appList.map((i) => i.current.length), 'Actual'.length) + 2;
+    const requiredWidth =
+      Math.max(...appList.map((i) => i.required.length), 'Requerida'.length) +
+      2;
+
+    const header =
+      ` ${'Paquete'.padEnd(nameWidth)}│` +
+      ` ${'Actual'.padEnd(currentWidth)}│` +
+      ` ${'Requerida'.padEnd(requiredWidth)}│ Cumple \n`;
+    process.stdout.write(lightBlue + header);
+
+    const line =
+      `${'─'.repeat(nameWidth + 1)}┼` +
+      `${'─'.repeat(currentWidth + 1)}┼` +
+      `${'─'.repeat(requiredWidth + 1)}┼────────\n`;
+    process.stdout.write(lightBlue + line);
+
+    appList.forEach((item) => {
+      const status = item.isValid ? `${OK}` : `${FAIL}`;
+      const color = item.isValid ? `${green}` : `${red}`;
+
+      const row =
+        ` ${item.name.padEnd(nameWidth)}│` +
+        ` ${item.current.padEnd(currentWidth)}│` +
+        ` ${item.required.padEnd(requiredWidth)}│ ${status}`;
+
+      process.stdout.write(color + row + reset + '\n');
+    });
+
+    const allValid = appList.every((i) => i.isValid);
+    const footer = allValid
+      ? `\n${green}${OK} Todas las dependencias cumplen con los requisitos.${reset}\n\n`
+      : `\n${red}${FAIL} Algunas dependencias no cumplen con los requisitos. Revisa el campo "engines" del archivo package.json${reset}\n\n`;
+
+    process.stdout.write(footer);
+  }
+
+  private printNoChecksRequired(color: string) {
+    const msg = `${color}${OK} No se encontraron requisitos de versiones.${reset}\n\n`;
+    process.stdout.write(msg);
   }
 
   private printLineBreack() {
     process.stdout.write('\n');
   }
 
-  private printSuccessCheck() {
-    const msg = `\x1b[94mParece que todo está en orden, continuemos...\x1b[0m\n`;
+  private printProjectInfo() {
+    const msg = `${reset}${lightBlue}\n> Verificando dependencias...${reset}
+
+${reset}${this.projectPath}/package.json${reset}\n`;
     process.stdout.write(msg);
   }
 
-  private printErrorCheck() {
-    const padLength = this.getPadLength();
+  private printSample() {
+    const msg = `${lightBlue}\nPuede especificar versiones requeridas de: ${green}node, npm, yarn, pm2, sequelize-cli${reset}
 
-    const installMessages = this.requiredApps
-      .map((app) => {
-        const appNamePadded = `${app.name}:`.padEnd(padLength, ' ');
-        const installCmd = app.getInstallMsg();
-        const installInfo = app.getInstallInfoMsg();
-        return `\x1b[36m\n    - para instalar ${appNamePadded} ${installCmd}\x1b[33m   ${installInfo}`;
-      })
-      .join('');
+${bold}Ejemplo:${reset}
 
-    const versionMessages = this.requiredApps
-      .map((app) => {
-        const versionMsg = app.getVersionMsg();
-        return `\x1b[36m\n    ${versionMsg}\x1b[33m`;
-      })
-      .join('');
-
-    const msg = `¡Ups! no podemos continuar.\n
-Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.\n
-\x1b[36mEjemplo:\n    ${installMessages}\n\x1b[36m
-Comprueba la versión:\n    ${versionMessages}\n`;
-    process.stdout.write(`\x1b[33m${msg}\n\x1b[0m`);
+  {
+    "name": "my-project",
+    "version": "1.0.0",
+  ${green}  "engines": {
+      "node": "^16",
+      "npm": "^8"
+    }${reset}
   }
 
-  private printInfo() {
-    const msg = `\x1b[94m${this.name}: ${this.version}\x1b[0m\n`;
-    process.stdout.write(msg);
-  }
+${reset}Semver (satisfies):${reset} ${magenta}https://github.com/npm/node-semver#usage${reset}\n
+`;
 
-  printSample() {
-    const appItemMsg = APP_LIST.map(
-      (appName) => `  - \x1b[36m${appName}\x1b[0m`,
-    ).join('\n');
-    const msg = `\x1b[32m\n¡Ups! ¿estamos dentro del proyecto?\x1b[0m\n
-Si es así, puedes especificar la versión requerida de:\n
-${appItemMsg}\n
-dentro del archivo \x1b[36mpackage.json\x1b[0m\n
-Ejemplo:\n
-    \x1b[36m{
-      "name": "my-project",
-      "version": "1.0.0",
-      "engines": {
-        "node": "^16",
-        "npm": "^8"
-      }
-    }\x1b[0m\n
-Formatos válidos (revisar el método satisfies):\n
-    \x1b[36mhttps://github.com/npm/node-semver#usage\x1b[0m\n\n`;
     process.stdout.write(msg);
   }
 }

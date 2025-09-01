@@ -6,6 +6,6 @@ export class YarnApp extends BaseApp {
   }
 
   getInstallMsg(): string {
-    return 'npm install -g yarn@1.22.19';
+    return 'npm install -g yarn@1.22.22';
   }
 }

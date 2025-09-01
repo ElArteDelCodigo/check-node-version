@@ -6,6 +6,6 @@ export class SequelizeCliApp extends BaseApp {
   }
 
   getInstallMsg(): string {
-    return 'npm install -g sequelize-cli@6.4.1';
+    return 'npm install -g sequelize-cli@6.6.3';
   }
 }

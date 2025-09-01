@@ -1,28 +1,32 @@
 import semver from 'semver';
 import { cmd, FAIL, OK } from '../tools/Util';
+import { green, red, reset } from '../tools/colors';
 
 export abstract class BaseApp {
   name: string;
   currentVersion: string;
   requiredVersion: string;
+  executePath: string;
 
   constructor(name: string) {
     this.name = name;
     this.currentVersion = '';
     this.requiredVersion = '';
+    this.executePath = '';
   }
 
-  async initialize(requiredVersion: string) {
+  async initialize(requiredVersion: string, executePath: string) {
+    this.executePath = executePath;
     this.currentVersion = await this.getVersion();
     this.requiredVersion = requiredVersion;
   }
 
   private async getVersion(): Promise<string> {
     try {
-      const cmdResult = await cmd(`${this.name} --version`, process.cwd());
+      const cmdResult = await cmd(`${this.name} --version`, this.executePath);
       const currentVersion = cmdResult.trim().split('\n').pop();
       return currentVersion ? currentVersion.trim().replace('v', '') : '';
-    } catch (e) {
+    } catch (_e) {
       return '';
     }
   }
@@ -32,15 +36,21 @@ export abstract class BaseApp {
   }
 
   printCheckValidMessage(padLength: number): void {
-    const appNamePadded = (this.name + ':').padEnd(padLength, ' ');
+    const appNamePadded = (this.name + '').padEnd(padLength, ' ');
     const currentVersionPadded = this.currentVersion.padStart(8, ' ');
-    process.stdout.write(`\x1b[32m${appNamePadded} ${currentVersionPadded} ${OK}  versión requerida: ${this.requiredVersion}\x1b[0m\n`);
+    const requiredVersionPadded = this.requiredVersion.padStart(8, ' ');
+    process.stdout.write(
+      `${green}${appNamePadded} actual: ${currentVersionPadded} requerida: ${requiredVersionPadded} ${OK}${reset}\n`,
+    );
   }
 
   printCheckErrorMessage(padLength: number): void {
-    const appNamePadded = (this.name + ':').padEnd(padLength, ' ');
+    const appNamePadded = (this.name + '').padEnd(padLength, ' ');
     const currentVersionPadded = this.currentVersion.padStart(8, ' ');
-    process.stdout.write(`\x1b[31m${appNamePadded} ${currentVersionPadded} ${FAIL}  versión requerida: ${this.requiredVersion}\x1b[0m\n`);
+    const requiredVersionPadded = this.requiredVersion.padStart(8, ' ');
+    process.stdout.write(
+      `${red}${appNamePadded} actual: ${currentVersionPadded} requerida: ${requiredVersionPadded} ${FAIL}${reset}\n`,
+    );
   }
 
   getInstallMsg(): string {
