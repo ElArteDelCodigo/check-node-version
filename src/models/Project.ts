@@ -195,8 +195,8 @@ ${bold}Ejemplo:${reset}
     "name": "my-project",
     "version": "1.0.0",
   ${green}  "engines": {
-      "node": "^16",
-      "npm": "^8"
+      "node": "^22",
+      "npm": ">=10"
     }${reset}
   }
 
