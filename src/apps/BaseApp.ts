@@ -1,6 +1,5 @@
 import semver from 'semver';
-import { cmd, FAIL, OK } from '../tools/Util';
-import { green, red, reset } from '../tools/colors';
+import { cmd } from '../tools/Util';
 
 export abstract class BaseApp {
   name: string;

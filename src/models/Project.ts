@@ -10,7 +10,16 @@ import {
 } from '../apps';
 import { APP_LIST } from '../common/constants';
 import { FAIL, OK } from '../tools/Util';
-import { bold, green, lightBlue, magenta, red, reset } from '../tools/colors';
+import {
+  bold,
+  cyan,
+  green,
+  lightBlue,
+  magenta,
+  red,
+  reset,
+  yellow,
+} from '../tools/colors';
 
 export class Project {
   projectPath: string;
@@ -83,13 +92,21 @@ export class Project {
     }
   }
 
+  private getPadLength() {
+    const padLength =
+      this.requiredApps.reduce(
+        (prev, curr) => (curr.name.length > prev ? curr.name.length : prev),
+        0,
+      ) + 1;
+    return padLength;
+  }
+
   async checkVersion(): Promise<{ isValid: boolean; pathValid: boolean }> {
-    this.printProjectInfo();
+    this.printProjectInfo(this.projectPath, this.name, this.version);
 
     if (!this.nodeProject) {
       this.printNoProjectValid();
-      this.printLineBreack();
-      this.printNoChecksRequired(green);
+      this.printSample();
       return { isValid: true, pathValid: false };
     }
 
@@ -112,7 +129,6 @@ export class Project {
     if (appList.length === 0) {
       this.printNoAppsDetected();
       this.printSample();
-      this.printNoChecksRequired(green);
     }
 
     const isValid = appList.every((item) => item.isValid);
@@ -120,12 +136,12 @@ export class Project {
   }
 
   private printNoProjectValid() {
-    const msg = `${lightBlue}\vEsta ubicación no corresponde a un proyecto de NodeJS\n${reset}`;
+    const msg = `${yellow}\n> No se detectó un proyecto válido de NodeJS en esta ubicación.\n${reset}`;
     process.stdout.write(msg);
   }
 
   private printNoAppsDetected() {
-    const msg = `${lightBlue}\vNo se encontraron dependencias requeridas en el campo "engines" del archivo ${reset}${bold}package.json${reset} \n${reset}`;
+    const msg = `${yellow}\n> No tiene definidas las dependencias requeridas.\n${reset}`;
     process.stdout.write(msg);
   }
 
@@ -169,30 +185,36 @@ export class Project {
 
     const allValid = appList.every((i) => i.isValid);
     const footer = allValid
-      ? `\n${green}${OK} Todas las dependencias cumplen con los requisitos.${reset}\n\n`
-      : `\n${red}${FAIL} Algunas dependencias no cumplen con los requisitos. Revisa el campo "engines" del archivo package.json${reset}\n\n`;
+      ? `\n${green}> Todas las dependencias cumplen con los requisitos.${reset}\n\n`
+      : `\n${red}> Algunas dependencias no cumplen con los requisitos.\n> Revisa el campo "engines" del archivo package.json.${reset}\n\n`;
 
     process.stdout.write(footer);
-  }
 
-  private printNoChecksRequired(color: string) {
-    const msg = `${color}${OK} No se encontraron requisitos de versiones.${reset}\n\n`;
-    process.stdout.write(msg);
+    if (!allValid) {
+      this.printErrorCheck();
+    }
   }
 
   private printLineBreack() {
     process.stdout.write('\n');
   }
 
-  private printProjectInfo() {
+  private printProjectInfo(
+    projectPath: string,
+    name?: string,
+    version?: string,
+  ) {
     const msg = `${reset}${lightBlue}\n> Verificando dependencias...${reset}
 
-${reset}${this.projectPath}/package.json${reset}\n`;
+${reset}Proyecto : ${lightBlue}${projectPath}/package.json${reset}
+${reset}Nombre   : ${lightBlue}${name || '-'}${reset}
+${reset}Versión  : ${lightBlue}${version || '-'}${reset}\n`;
     process.stdout.write(msg);
   }
 
   private printSample() {
-    const msg = `${lightBlue}\nPuede especificar versiones requeridas de: ${green}node, npm, yarn, pm2, sequelize-cli${reset}
+    // Define las versiones mínimas en el campo "engines" de tu package.json.
+    const msg = `${lightBlue}> Define los requisitos de versiones en el bloque "engines" del archivo ${reset}${bold}package.json${reset}
 
 ${bold}Ejemplo:${reset}
 
@@ -205,9 +227,37 @@ ${bold}Ejemplo:${reset}
     }${reset}
   }
 
-${reset}Semver (satisfies):${reset} ${magenta}https://github.com/npm/node-semver#usage${reset}\n
+${reset}Paquetes soportados: ${green}node, npm, yarn, pm2, sequelize-cli${reset}
+${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usage${reset}\n
 `;
 
     process.stdout.write(msg);
+  }
+
+  private printErrorCheck() {
+    const padLength = this.getPadLength();
+
+    const installMessages = this.requiredApps
+      .map((app) => {
+        const appNamePadded = `${app.name}:`.padEnd(padLength, ' ');
+        const installCmd = app.getInstallMsg();
+        const installInfo = app.getInstallInfoMsg();
+        return `${cyan}\n    - ${appNamePadded} ${installCmd}${magenta}   ${installInfo}`;
+      })
+      .join('');
+
+    const versionMessages = this.requiredApps
+      .map((app) => `${cyan}\n    ${app.getVersionMsg()}`)
+      .join('');
+
+    const msg = `${yellow}> Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.${reset}
+
+${cyan}Instalación sugerida:
+    ${installMessages}
+
+${cyan}Verifica la versión instalada:
+    ${versionMessages}
+`;
+    process.stdout.write(`${msg}\n${reset}`);
   }
 }
