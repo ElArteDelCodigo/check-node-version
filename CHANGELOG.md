@@ -1,23 +1,33 @@
-## 🚀 Versión 1.2.0-beta.0 <small>(2025-09-01)</small>
+## 🚀 Versión 1.2.0 <small>(2025-09-02)</small>
 
 ### ✨ Features
 
+* agrega ejemplos de uso e instalación de paquetes (524fe0b)
+* mejora el mensaje de instalación en base a la versión requerida (6974091)
 * mejora los mensajes informativos (e799e2a)
 
 ### 📖 Documentación
 
 * actualiza documentación INSTALL.md y README.md (6ebb753)
 * actualiza instrucciones de despliegue (3e45359)
+* actualiza la documentación (844b687)
+* actualiza a la versión 1.2.0-beta.0 (b77c791)
 * agrega INSTALL.md para contribuidores (24a5524)
 
 ### 🛠 Chores
 
 * actualiza dependencias (8551423)
+* limpieza de código (91a3543)
 * migra configuración de eslint a v9 (flat config) (d032339)
 
 ### 🧪 Tests
 
 * 🧪 actualiza pruebas unitarias para validación de versiones (a631e22)
+* 🧪 agrega tests de casos negativos (da51433)
+
+### 🎨 Style
+
+* ajusta la tabla de resultados (2b6d945)
 ## 🚀 Versión 1.1.7 <small>(2023-02-05)</small>
 
 *  (ac58139)
