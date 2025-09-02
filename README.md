@@ -7,112 +7,137 @@
   <a href="https://github.com/ElArteDelCodigo/check-node-version/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/ElArteDelCodigo/check-node-version" alt="License: MIT" />
   </a>
+  <a href="https://www.npmjs.com/package/@elartedelcodigo/check-node-version">
+    <img src="https://img.shields.io/npm/dm/%40elartedelcodigo%2Fcheck-node-version" alt="npm downloads" />
+  </a>
+  <a href="#uso">
+    <img src="https://img.shields.io/badge/CLI-ready-success" alt="CLI ready" />
+  </a>
 </p>
 
-Verifica que la versión de node sea la correcta cuando se levanta una aplicación.
+CLI para validar que las versiones de tus herramientas coincidan con lo declarado en `package.json` (`engines`). Útil para garantizar entornos coherentes en desarrollo y CI/CD.
 
-Puede verificar cualquiera de las siguientes aplicaciones:
+## Características
 
-- `node`
-- `npm`
-- `yarn`
-- `pm2`
-- `sequelize`
+- Soporta: `node`, `npm`, `yarn`, `pm2`, `sequelize-cli`.
 
-las cuales deben ser especificadas en el archivo `package.json`.
+- Detecta automáticamente un proyecto NodeJS si existe `package.json` en el directorio actual.
+
+- Si no hay `engines`, no realiza validaciones y finaliza con éxito.
 
 ## Instalación
 
 ```bash
+# Global
 npm install -g @elartedelcodigo/check-node-version
+
+# Verifica
+check-node-version --version
+
+  1.2.0
 ```
 
-## Ejemplo:
+## Configuración
 
-Si en el archivo `package.json` tenemos la siguiente configuración:
+Define los rangos de versiones en el `package.json` usando `engines` (semver):
 
 ```json
 {
   "name": "my-project",
   "version": "1.0.0",
   "engines": {
-    "node": "^16",
-    "npm": "^8"
+    "node": "^22",
+    "npm": ">=10"
   }
 }
 ```
 
-**Nota.-** Para utilizar la versión correcta puede consultar [https://www.npmjs.com/package/semver](https://www.npmjs.com/package/semver)
+Referencia semver: https://github.com/npm/node-semver#usage
 
-Luego desde la raíz del proyecto ejecutamos el siguiente comando:
+### Scripts recomendados
 
-```bash
-check-node-version
+Agrega validaciones como `prestart`/`postinstall` para fallar temprano si hay incompatibilidades:
+
+```json
+{
+  "scripts": {
+    "postinstall": "check-node-version",
+    "prestart": "check-node-version",
+    "start": "node index.js"
+  }
+}
 ```
 
-Resultado si tenemos instalada la versión correcta:
+## Ejemplo de uso
+
+```txt
+app/
+  ├── index.js
+  └── package.json
+```
+
+```js
+// index.js
+console.log('Hello world!');
+```
+
+Archivo `package.json`
+
+```json
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "postinstall": "check-node-version",
+    "prestart": "check-node-version"
+  },
+  "engines": {
+    "node": "^22",
+    "npm": ">=10"
+  },
+  "dependencies": {
+    "@elartedelcodigo/check-node-version": "1.2.0"
+  }
+}
+```
+
+Resultado al instalar las dependencias:
 
 ```bash
-my-project: 1.0.0
-node: 16.15.1 ✓  versión requerida: ^16
-npm:   8.12.2 ✓  versión requerida: ^8
+$ npm install
 
-Parece que todo está en orden, continuemos...
+> app@1.0.0 postinstall
+> check-node-version
+
+
+> Verificando dependencias...
+
+Proyecto : /projects/app/package.json
+Nombre   : app
+Versión  : 1.0.0
+
+ Paquete │ Versión actual │ Versión requerida │ Estado
+─────────┼────────────────┼───────────────────┼────────
+ node    │ 22.19.0        │ ^22               │ ✓
+ npm     │ 10.9.3         │ >=10              │ ✓
+
+> Todas las dependencias cumplen con los requisitos.
+
+
+added 1 package, and audited 3 packages in 981ms
+
+found 0 vulnerabilities
 
 ```
 
-en caso contrario:
+## Códigos de salida
 
-```bash
-my-project: 1.0.0
-node: 14.18.3 ✕  versión requerida: ^16
-npm:   7.24.2 ✕  versión requerida: ^8
+- `0`: todas las herramientas cumplen con `engines`, no hay `engines`, o no es un proyecto de NodeJS (no hay `package.json`).
+- `1`: al menos una herramienta no cumple el rango indicado en `engines`.
 
-¡Ups! no podemos continuar.
+## Licencia
 
-Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.
-
-Ejemplo:
-
-    - para instalar node: nvm install 16.15.1   (https://github.com/nvm-sh/nvm)
-    - para instalar npm:  npm install -g npm@8.12.2
-
-Comprueba la versión:
-
-    node -v
-    npm -v
-
-```
-
-Y en el caso de no encontrarse dentro de la carpeta correcta:
-
-```bash
-
-¡Ups! ¿estamos dentro del proyecto?
-
-Si es así, puedes especificar la versión requerida de:
-
-  - node
-  - npm
-  - yarn
-  - pm2
-  - sequelize
-
-dentro del archivo package.json
-
-Ejemplo:
-
-    {
-      "name": "my-project",
-      "version": "1.0.0",
-      "engines": {
-        "node": "^16",
-        "npm": "^8"
-      }
-    }
-
-Formatos válidos (revisar el método satisfies):
-
-    https://github.com/npm/node-semver#usage
-
-```
+MIT — consulta [LICENSE](./LICENSE) para los términos.
