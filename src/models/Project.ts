@@ -252,10 +252,10 @@ ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usag
 
     const msg = `${yellow}> Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.${reset}
 
-${cyan}Instalación sugerida:
+  ${cyan}Instalación sugerida:
     ${installMessages}
 
-${cyan}Verifica la versión instalada:
+  ${cyan}Verifica la versión instalada:
     ${versionMessages}
 `;
     process.stdout.write(`${msg}\n${reset}`);

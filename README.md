@@ -115,19 +115,22 @@ $ npm install
 
 > Verificando dependencias...
 
-/projects/app/package.json
+Proyecto : /projects/app/package.json
+Nombre   : app
+Versión  : 1.0.0
 
  Paquete │ Versión actual │ Versión requerida │ Estado
 ─────────┼────────────────┼───────────────────┼────────
  node    │ 22.19.0        │ ^22               │ ✓
  npm     │ 10.9.3         │ >=10              │ ✓
 
-✓ Todas las dependencias cumplen con los requisitos.
+> Todas las dependencias cumplen con los requisitos.
 
 
-added 1 package, and audited 3 packages in 1s
+added 1 package, and audited 3 packages in 981ms
 
 found 0 vulnerabilities
+
 ```
 
 ## Códigos de salida
