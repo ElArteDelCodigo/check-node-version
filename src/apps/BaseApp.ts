@@ -34,8 +34,30 @@ export abstract class BaseApp {
     return semver.satisfies(this.currentVersion, this.requiredVersion);
   }
 
+  getMinVersion(): string {
+    try {
+      const raw = (this.requiredVersion ?? '').trim();
+      if (!raw || raw === '*') return 'latest';
+
+      const exact = semver.valid(raw);
+      if (exact) return exact;
+
+      const range = semver.validRange(raw);
+      if (range) {
+        const min = semver.minVersion(range);
+        if (min) return min.version;
+      }
+
+      // Si llega aquí, no se pudo resolver
+      return '1.0.0';
+    } catch {
+      // En cualquier error inesperado
+      return '1.0.0';
+    }
+  }
+
   getInstallMsg(): string {
-    return `npm install -g ${this.name}@1.0.0`;
+    return `npm install -g ${this.name}@${this.getMinVersion()}`;
   }
 
   getInstallInfoMsg(): string {
