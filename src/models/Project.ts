@@ -206,7 +206,7 @@ export class Project {
     name?: string,
     version?: string,
   ) {
-    const msg = `${reset}${lightBlue}\n> Verificando dependencias...${reset}
+    const msg = `\n${reset}${lightBlue}> Verificando dependencias...${reset}
 
 ${reset}Proyecto : ${lightBlue}${projectPath}/package.json${reset}
 ${reset}Nombre   : ${lightBlue}${name || '-'}${reset}
@@ -229,7 +229,7 @@ ${bold}Ejemplo:${reset}
     }${reset}
   }
 
-${reset}Paquetes soportados: ${green}node, npm, yarn, pm2, sequelize-cli${reset}
+${reset}Paquetes soportados: ${green}${APP_LIST.join(', ')}${reset}
 ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usage${reset}\n
 `;
 
@@ -244,12 +244,12 @@ ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usag
         const appNamePadded = `${app.name}:`.padEnd(padLength, ' ');
         const installCmd = app.getInstallMsg();
         const installInfo = app.getInstallInfoMsg();
-        return `${cyan}\n    - ${appNamePadded} ${installCmd}${magenta}   ${installInfo}`;
+        return `\n${cyan}    - ${appNamePadded} ${installCmd}${magenta}   ${installInfo}`;
       })
       .join('');
 
     const versionMessages = this.requiredApps
-      .map((app) => `${cyan}\n    ${app.getVersionMsg()}`)
+      .map((app) => `\n${cyan}    ${app.getVersionMsg()}`)
       .join('');
 
     const msg = `${yellow}> Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.${reset}
