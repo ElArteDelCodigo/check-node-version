@@ -65,7 +65,7 @@ describe('testing Project.ts file', () => {
     const project = new Project(PROJECT_PATH);
     await project.initialize();
 
-    expect(project.requiredApps.length).toBe(5);
+    expect(project.requiredApps.length).toBe(6);
 
     const { isValid, pathValid } = await project.checkVersion();
     expect(isValid).toBe(true);

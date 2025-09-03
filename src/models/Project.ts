@@ -4,6 +4,7 @@ import {
   BaseApp,
   NodeApp,
   NpmApp,
+  PnpmApp,
   Pm2App,
   SequelizeCliApp,
   YarnApp,
@@ -70,6 +71,7 @@ export class Project {
       if (key === 'npm') app = new NpmApp();
       if (key === 'pm2') app = new Pm2App();
       if (key === 'yarn') app = new YarnApp();
+      if (key === 'pnpm') app = new PnpmApp();
       if (key === 'sequelize-cli') app = new SequelizeCliApp();
 
       if (app) {

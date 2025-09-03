@@ -19,7 +19,7 @@ CLI para validar que las versiones de tus herramientas coincidan con lo declarad
 
 ## Características
 
-- Soporta: `node`, `npm`, `yarn`, `pm2`, `sequelize-cli`.
+- Soporta: `node`, `npm`, `yarn`, `pnpm`, `pm2`, `sequelize-cli`.
 
 - Detecta automáticamente un proyecto NodeJS si existe `package.json` en el directorio actual.
 
