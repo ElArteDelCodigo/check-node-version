@@ -68,7 +68,21 @@ Agrega validaciones como `prestart`/`postinstall` para fallar temprano si hay in
 }
 ```
 
-## Ejemplo de uso
+## Ejemplo de uso global
+
+Si se cumplen los requisitos
+
+![image_1.png](./assets/image_1.png)
+
+Si no se cumplen los requisitos
+
+![image_2.png](./assets/image_2.png)
+
+Si nos encontramos en la carpeta incorrecta
+
+![image_3.png](./assets/image_3.png)
+
+## Ejemplo de uso dentro de un proyecto de NodeJS
 
 ```txt
 app/
@@ -106,32 +120,11 @@ Archivo `package.json`
 
 Resultado al instalar las dependencias:
 
-```bash
-$ npm install
+![image_4.png](./assets/image_4.png)
 
-> app@1.0.0 postinstall
-> check-node-version
+Resultado al ejecutar la aplicación:
 
-
-> Verificando dependencias...
-
-Proyecto : /projects/app/package.json
-Nombre   : app
-Versión  : 1.0.0
-
- Paquete │ Versión actual │ Versión requerida │ Estado
-─────────┼────────────────┼───────────────────┼────────
- node    │ 22.19.0        │ ^22               │ ✓
- npm     │ 10.9.3         │ >=10              │ ✓
-
-> Todas las dependencias cumplen con los requisitos.
-
-
-added 1 package, and audited 3 packages in 981ms
-
-found 0 vulnerabilities
-
-```
+![image_5.png](./assets/image_5.png)
 
 ## Códigos de salida
 
