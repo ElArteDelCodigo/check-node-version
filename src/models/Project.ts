@@ -206,9 +206,10 @@ export class Project {
     name?: string,
     version?: string,
   ) {
+    const packageJsonPath = path.resolve(projectPath, 'package.json');
     const msg = `\n${reset}${lightBlue}> Verificando dependencias...${reset}
 
-${reset}Proyecto : ${lightBlue}${projectPath}/package.json${reset}
+${reset}Proyecto : ${lightBlue}${packageJsonPath}${reset}
 ${reset}Nombre   : ${lightBlue}${name || '-'}${reset}
 ${reset}Versión  : ${lightBlue}${version || '-'}${reset}\n`;
     process.stdout.write(msg);
