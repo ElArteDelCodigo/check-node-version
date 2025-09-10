@@ -162,15 +162,15 @@ export class Project {
       ) + 1;
 
     const header =
-      ` ${'Paquete'.padEnd(nameWidth)}│` +
-      ` ${'Versión actual'.padEnd(currentWidth)}│` +
-      ` ${'Versión requerida'.padEnd(requiredWidth)}│ Estado \n`;
+      ` ${'Paquete'.padEnd(nameWidth)} ` +
+      ` ${'Versión actual'.padEnd(currentWidth)} ` +
+      ` ${'Versión requerida'.padEnd(requiredWidth)}  Estado \n`;
     process.stdout.write(lightBlue + header);
 
     const line =
-      `${'─'.repeat(nameWidth + 1)}┼` +
-      `${'─'.repeat(currentWidth + 1)}┼` +
-      `${'─'.repeat(requiredWidth + 1)}┼────────\n`;
+      `${'─'.repeat(nameWidth + 1)}─` +
+      `${'─'.repeat(currentWidth + 1)}─` +
+      `${'─'.repeat(requiredWidth + 1)}─────────\n`;
     process.stdout.write(lightBlue + line);
 
     appList.forEach((item) => {
@@ -178,9 +178,9 @@ export class Project {
       const color = item.isValid ? `${green}` : `${red}`;
 
       const row =
-        ` ${item.name.padEnd(nameWidth)}│` +
-        ` ${item.current.padEnd(currentWidth)}│` +
-        ` ${item.required.padEnd(requiredWidth)}│ ${status}`;
+        ` ${item.name.padEnd(nameWidth)} ` +
+        ` ${item.current.padEnd(currentWidth)} ` +
+        ` ${item.required.padEnd(requiredWidth)}  ${status}`;
 
       process.stdout.write(color + row + reset + '\n');
     });
