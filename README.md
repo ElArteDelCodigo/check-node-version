@@ -72,15 +72,15 @@ Agrega validaciones como `prestart`/`postinstall` para fallar temprano si hay in
 
 Si se cumplen los requisitos
 
-![image_3.png](./assets/image_3.png)
+![image_3.png](https://elartedelcodigo.github.io/static/assets/github/image_3.png)
 
 Si no se cumplen los requisitos
 
-![image_4.png](./assets/image_4.png)
+![image_4.png](https://elartedelcodigo.github.io/static/assets/github/image_4.png)
 
 Si nos encontramos en la carpeta incorrecta
 
-![image_5.png](./assets/image_5.png)
+![image_5.png](https://elartedelcodigo.github.io/static/assets/github/image_5.png)
 
 ## Ejemplo de uso dentro de un proyecto de NodeJS
 
@@ -120,11 +120,11 @@ Archivo `package.json`
 
 Resultado al instalar las dependencias:
 
-![image_1.png](./assets/image_1.png)
+![image_1.png](https://elartedelcodigo.github.io/static/assets/github/image_1.png)
 
 Resultado al ejecutar la aplicación:
 
-![image_2.png](./assets/image_2.png)
+![image_2.png](https://elartedelcodigo.github.io/static/assets/github/image_2.png)
 
 ## Códigos de salida
 
