@@ -34,7 +34,7 @@ npm install -g @elartedelcodigo/check-node-version
 # Verifica
 check-node-version --version
 
-  1.2.0
+  1.3.0
 ```
 
 ## Configuración
@@ -113,7 +113,7 @@ Archivo `package.json`
     "npm": ">=10"
   },
   "dependencies": {
-    "@elartedelcodigo/check-node-version": "1.2.0"
+    "@elartedelcodigo/check-node-version": "1.3.0"
   }
 }
 ```

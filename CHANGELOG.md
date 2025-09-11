@@ -1,33 +1,68 @@
+## 🚀 Versión 1.3.0 <small>(2025-09-11)</small>
+
+### ✨ Features
+
+* agrega soporte para verificar pnpm (125799c)
+
+### 📖 Documentación
+
+* actualiza el readme y el manual de instalación (128f159)
+
+### 🛠 Chores
+
+* actualiza enlaces de imágenes en el README para usar URL absolutas (0f260d1)
+* actualiza imágenes en la carpeta de assets (d59e2e8)
+* ajusta el formato de salida en la impresión de resultados de verificación (edebe46)
+* ajuste de los mensajes para los tests (305a8e5)
+* soporte para platform distinto de linux (c567b09)
+
+### 🧪 Tests
+
+* ajuste para ejecutar pruebas silenciosamente (840646d)
 ## 🚀 Versión 1.2.0 <small>(2025-09-02)</small>
 
 ### ✨ Features
 
 * agrega ejemplos de uso e instalación de paquetes (524fe0b)
 * mejora el mensaje de instalación en base a la versión requerida (6974091)
+
+### 📖 Documentación
+
+* actualiza la documentación (844b687)
+* actualiza a la versión 1.2.0 (cb72d37)
+
+### 🛠 Chores
+
+* limpieza de código (91a3543)
+
+### 🧪 Tests
+
+* 🧪 agrega tests de casos negativos (da51433)
+
+### 🎨 Style
+
+* ajusta la tabla de resultados (2b6d945)
+## 🚀 Versión 1.2.0-beta.0 <small>(2025-09-01)</small>
+
+### ✨ Features
+
 * mejora los mensajes informativos (e799e2a)
 
 ### 📖 Documentación
 
 * actualiza documentación INSTALL.md y README.md (6ebb753)
 * actualiza instrucciones de despliegue (3e45359)
-* actualiza la documentación (844b687)
 * actualiza a la versión 1.2.0-beta.0 (b77c791)
 * agrega INSTALL.md para contribuidores (24a5524)
 
 ### 🛠 Chores
 
 * actualiza dependencias (8551423)
-* limpieza de código (91a3543)
 * migra configuración de eslint a v9 (flat config) (d032339)
 
 ### 🧪 Tests
 
 * 🧪 actualiza pruebas unitarias para validación de versiones (a631e22)
-* 🧪 agrega tests de casos negativos (da51433)
-
-### 🎨 Style
-
-* ajusta la tabla de resultados (2b6d945)
 ## 🚀 Versión 1.1.7 <small>(2023-02-05)</small>
 
 *  (ac58139)
