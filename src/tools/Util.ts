@@ -13,5 +13,5 @@ export const cmd = (command: string, executePath: string): Promise<string> => {
   });
 };
 
-export const OK = `${process.platform === 'linux' ? '\u2713' : ''}`;
+export const OK = `${process.platform === 'linux' ? '\u2713' : 'ok'}`;
 export const FAIL = `${process.platform === 'linux' ? '\u2715' : 'x'}`;

@@ -19,7 +19,7 @@ CLI para validar que las versiones de tus herramientas coincidan con lo declarad
 
 ## Características
 
-- Soporta: `node`, `npm`, `yarn`, `pm2`, `sequelize-cli`.
+- Soporta: `node`, `npm`, `yarn`, `pnpm`, `pm2`, `sequelize-cli`.
 
 - Detecta automáticamente un proyecto NodeJS si existe `package.json` en el directorio actual.
 
@@ -68,7 +68,21 @@ Agrega validaciones como `prestart`/`postinstall` para fallar temprano si hay in
 }
 ```
 
-## Ejemplo de uso
+## Ejemplo de uso global
+
+Si se cumplen los requisitos
+
+![image_3.png](https://elartedelcodigo.github.io/static/assets/github/image_3.png)
+
+Si no se cumplen los requisitos
+
+![image_4.png](https://elartedelcodigo.github.io/static/assets/github/image_4.png)
+
+Si nos encontramos en la carpeta incorrecta
+
+![image_5.png](https://elartedelcodigo.github.io/static/assets/github/image_5.png)
+
+## Ejemplo de uso dentro de un proyecto de NodeJS
 
 ```txt
 app/
@@ -106,32 +120,11 @@ Archivo `package.json`
 
 Resultado al instalar las dependencias:
 
-```bash
-$ npm install
+![image_1.png](https://elartedelcodigo.github.io/static/assets/github/image_1.png)
 
-> app@1.0.0 postinstall
-> check-node-version
+Resultado al ejecutar la aplicación:
 
-
-> Verificando dependencias...
-
-Proyecto : /projects/app/package.json
-Nombre   : app
-Versión  : 1.0.0
-
- Paquete │ Versión actual │ Versión requerida │ Estado
-─────────┼────────────────┼───────────────────┼────────
- node    │ 22.19.0        │ ^22               │ ✓
- npm     │ 10.9.3         │ >=10              │ ✓
-
-> Todas las dependencias cumplen con los requisitos.
-
-
-added 1 package, and audited 3 packages in 981ms
-
-found 0 vulnerabilities
-
-```
+![image_2.png](https://elartedelcodigo.github.io/static/assets/github/image_2.png)
 
 ## Códigos de salida
 

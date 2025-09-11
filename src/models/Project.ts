@@ -4,6 +4,7 @@ import {
   BaseApp,
   NodeApp,
   NpmApp,
+  PnpmApp,
   Pm2App,
   SequelizeCliApp,
   YarnApp,
@@ -70,6 +71,7 @@ export class Project {
       if (key === 'npm') app = new NpmApp();
       if (key === 'pm2') app = new Pm2App();
       if (key === 'yarn') app = new YarnApp();
+      if (key === 'pnpm') app = new PnpmApp();
       if (key === 'sequelize-cli') app = new SequelizeCliApp();
 
       if (app) {
@@ -160,15 +162,15 @@ export class Project {
       ) + 1;
 
     const header =
-      ` ${'Paquete'.padEnd(nameWidth)}│` +
-      ` ${'Versión actual'.padEnd(currentWidth)}│` +
-      ` ${'Versión requerida'.padEnd(requiredWidth)}│ Estado \n`;
+      ` ${'Paquete'.padEnd(nameWidth)} ` +
+      ` ${'Versión actual'.padEnd(currentWidth)} ` +
+      ` ${'Versión requerida'.padEnd(requiredWidth)}  Estado \n`;
     process.stdout.write(lightBlue + header);
 
     const line =
-      `${'─'.repeat(nameWidth + 1)}┼` +
-      `${'─'.repeat(currentWidth + 1)}┼` +
-      `${'─'.repeat(requiredWidth + 1)}┼────────\n`;
+      `${'─'.repeat(nameWidth + 1)}─` +
+      `${'─'.repeat(currentWidth + 1)}─` +
+      `${'─'.repeat(requiredWidth + 1)}─────────\n`;
     process.stdout.write(lightBlue + line);
 
     appList.forEach((item) => {
@@ -176,9 +178,9 @@ export class Project {
       const color = item.isValid ? `${green}` : `${red}`;
 
       const row =
-        ` ${item.name.padEnd(nameWidth)}│` +
-        ` ${item.current.padEnd(currentWidth)}│` +
-        ` ${item.required.padEnd(requiredWidth)}│ ${status}`;
+        ` ${item.name.padEnd(nameWidth)} ` +
+        ` ${item.current.padEnd(currentWidth)} ` +
+        ` ${item.required.padEnd(requiredWidth)}  ${status}`;
 
       process.stdout.write(color + row + reset + '\n');
     });
@@ -204,9 +206,10 @@ export class Project {
     name?: string,
     version?: string,
   ) {
-    const msg = `${reset}${lightBlue}\n> Verificando dependencias...${reset}
+    const packageJsonPath = path.resolve(projectPath, 'package.json');
+    const msg = `\n${reset}${lightBlue}> Verificando dependencias...${reset}
 
-${reset}Proyecto : ${lightBlue}${projectPath}/package.json${reset}
+${reset}Proyecto : ${lightBlue}${packageJsonPath}${reset}
 ${reset}Nombre   : ${lightBlue}${name || '-'}${reset}
 ${reset}Versión  : ${lightBlue}${version || '-'}${reset}\n`;
     process.stdout.write(msg);
@@ -227,7 +230,7 @@ ${bold}Ejemplo:${reset}
     }${reset}
   }
 
-${reset}Paquetes soportados: ${green}node, npm, yarn, pm2, sequelize-cli${reset}
+${reset}Paquetes soportados: ${green}${APP_LIST.join(', ')}${reset}
 ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usage${reset}\n
 `;
 
@@ -242,12 +245,12 @@ ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usag
         const appNamePadded = `${app.name}:`.padEnd(padLength, ' ');
         const installCmd = app.getInstallMsg();
         const installInfo = app.getInstallInfoMsg();
-        return `${cyan}\n    - ${appNamePadded} ${installCmd}${magenta}   ${installInfo}`;
+        return `\n${cyan}    - ${appNamePadded} ${installCmd}${magenta}   ${installInfo}`;
       })
       .join('');
 
     const versionMessages = this.requiredApps
-      .map((app) => `${cyan}\n    ${app.getVersionMsg()}`)
+      .map((app) => `\n${cyan}    ${app.getVersionMsg()}`)
       .join('');
 
     const msg = `${yellow}> Asegúrate de tener instalada la versión correcta e inténtalo nuevamente.${reset}
