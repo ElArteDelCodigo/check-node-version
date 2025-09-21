@@ -1,4 +1,4 @@
-## 🚀 Versión 1.3.0 <small>(2025-09-11)</small>
+## 🚀 Versión 1.3.0 <small>(2025-09-10)</small>
 
 ### ✨ Features
 
@@ -7,6 +7,7 @@
 ### 📖 Documentación
 
 * actualiza el readme y el manual de instalación (128f159)
+* actualiza a la versión 1.3.0 (9d117cd)
 
 ### 🛠 Chores
 
@@ -37,7 +38,7 @@
 
 ### 🧪 Tests
 
-* 🧪 agrega tests de casos negativos (da51433)
+* agrega tests de casos negativos (da51433)
 
 ### 🎨 Style
 
@@ -62,31 +63,23 @@
 
 ### 🧪 Tests
 
-* 🧪 actualiza pruebas unitarias para validación de versiones (a631e22)
+* actualiza pruebas unitarias para validación de versiones (a631e22)
 ## 🚀 Versión 1.1.7 <small>(2023-02-05)</small>
-
-*  (ac58139)
 
 ### 📖 Documentación
 
 * actualizando README.md (2b01623)
 ## 🚀 Versión 1.1.6 <small>(2023-02-05)</small>
 
-*  (a950c1c)
-
 ### 📖 Documentación
 
 * actualizando README.md (3ace783)
 ## 🚀 Versión 1.1.5 <small>(2023-02-05)</small>
 
-*  (ea2de71)
-
 ### ✨ Features
 
 * actualizando paquetes (d00d74e)
 ## 🚀 Versión 1.1.4 <small>(2022-07-09)</small>
-
-*  (1c84fac)
 
 ### ✨ Features
 
@@ -97,8 +90,6 @@
 
 * README.md actualizado (9851f48)
 ## 🚀 Versión 1.1.3 <small>(2022-07-09)</small>
-
-*  (8ceb719)
 
 ### ✨ Features
 
@@ -111,43 +102,32 @@
 * correcciones (b80a13c)
 ## 🚀 Versión 1.1.2 <small>(2022-06-21)</small>
 
-*  (16baaa6)
-
 ### 📖 Documentación
 
 * documentación actualizada (927bfe9)
 ## 🚀 Versión 1.1.1 <small>(2022-06-21)</small>
-
-*  (383397d)
 
 ### ✨ Features
 
 * referencia a Formatos válidos adicionado (3d09076)
 ## 🚀 Versión 1.1.0 <small>(2022-06-21)</small>
 
-*  (8a4434a)
-
 ### ✨ Features
 
 * Se agregó el soporte para pm2 y sequelize entre otras mejoras (f5dc4f2)
-## 🚀 Versión 1.0.2 <small>(2022-06-06)</small>
-
-*  (4e9666e)
+## 🚀 Versión 1.0.2 <small>(2022-06-05)</small>
 
 ### ✨ Features
 
 * mensajes actualizados (b7f43a8)
 ## 🚀 Versión 1.0.1 <small>(2022-06-04)</small>
 
-*  (d454f45)
-*  (1387f98)
-
 ### ✨ Features
 
-* first commit :sparkles: (aa62f21)
+* first commit (aa62f21)
 * rename package (f07e9b7)
 * se adicionó semver como herramienta para comparar versiones (eceea29)
-* validate version :sparkles: (00bc3a7)
+* validate version (00bc3a7)
 
 ### 📖 Documentación
 
