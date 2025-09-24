@@ -1,6 +1,7 @@
 import { Project } from './models/Project';
 import fs from 'fs';
 import path from 'path';
+import { printWithColor } from './tools/Util';
 
 if (!String.prototype.padEnd) {
   String.prototype.padEnd = function () {
@@ -32,7 +33,8 @@ async function init() {
     process.argv.join(' ').includes(' -v')
   ) {
     const version = await getVersion();
-    return process.stdout.write(`${version}\n`);
+    const msg = `${version}\n`;
+    return printWithColor(msg);
   }
 
   // EXECUTE APP

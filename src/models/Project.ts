@@ -10,7 +10,7 @@ import {
   YarnApp,
 } from '../apps';
 import { APP_LIST } from '../common/constants';
-import { FAIL, OK } from '../tools/Util';
+import { FAIL, OK, printWithColor } from '../tools/Util';
 import {
   bold,
   cyan,
@@ -124,7 +124,6 @@ export class Project {
     }
 
     if (appList.length > 0) {
-      this.printLineBreack();
       this.printCheckResult(appList);
     }
 
@@ -138,13 +137,13 @@ export class Project {
   }
 
   private printNoProjectValid() {
-    const msg = `${yellow}\n> No se detectó un proyecto válido de NodeJS en esta ubicación.\n${reset}`;
-    process.stdout.write(msg);
+    const msg = `\n${yellow}> No se detectó un proyecto válido de NodeJS en esta ubicación.\n`;
+    printWithColor(msg);
   }
 
   private printNoAppsDetected() {
-    const msg = `${yellow}\n> No tiene definidas las dependencias requeridas.\n${reset}`;
-    process.stdout.write(msg);
+    const msg = `\n${yellow}> No tiene definidas las dependencias requeridas.\n`;
+    printWithColor(msg);
   }
 
   private printCheckResult(appList: Array<AppCheckResultItem>) {
@@ -161,44 +160,47 @@ export class Project {
         'Versión requerida'.length,
       ) + 1;
 
+    let resultMsg = '\n';
+
     const header =
+      lightBlue +
       ` ${'Paquete'.padEnd(nameWidth)} ` +
       ` ${'Versión actual'.padEnd(currentWidth)} ` +
-      ` ${'Versión requerida'.padEnd(requiredWidth)}  Estado \n`;
-    process.stdout.write(lightBlue + header);
+      ` ${'Versión requerida'.padEnd(requiredWidth)}  Estado`;
+    resultMsg += header + '\n';
 
     const line =
+      lightBlue +
       `${'─'.repeat(nameWidth + 1)}─` +
       `${'─'.repeat(currentWidth + 1)}─` +
-      `${'─'.repeat(requiredWidth + 1)}─────────\n`;
-    process.stdout.write(lightBlue + line);
+      `${'─'.repeat(requiredWidth + 1)}─────────`;
+    resultMsg += line + '\n';
 
     appList.forEach((item) => {
       const status = item.isValid ? `${OK}` : `${FAIL}`;
       const color = item.isValid ? `${green}` : `${red}`;
 
       const row =
+        color +
         ` ${item.name.padEnd(nameWidth)} ` +
         ` ${item.current.padEnd(currentWidth)} ` +
         ` ${item.required.padEnd(requiredWidth)}  ${status}`;
-
-      process.stdout.write(color + row + reset + '\n');
+      resultMsg += row + '\n';
     });
 
     const allValid = appList.every((i) => i.isValid);
-    const footer = allValid
-      ? `\n${green}> Todas las dependencias cumplen con los requisitos.${reset}\n\n`
-      : `\n${red}> Algunas dependencias no cumplen con los requisitos.\n> Revisa el campo "engines" del archivo package.json.${reset}\n\n`;
+    const footerColor = allValid ? green : red;
 
-    process.stdout.write(footer);
+    const successFooterMsg = `${footerColor}> Todas las dependencias cumplen con los requisitos.`;
+    const errorFooterMsg = `${footerColor}> Algunas dependencias no cumplen con los requisitos.
+${footerColor}> Revisa el campo "engines" del archivo package.json.`;
+
+    resultMsg += '\n' + (allValid ? successFooterMsg : errorFooterMsg) + '\n\n';
+    printWithColor(resultMsg);
 
     if (!allValid) {
       this.printErrorCheck();
     }
-  }
-
-  private printLineBreack() {
-    process.stdout.write('\n');
   }
 
   private printProjectInfo(
@@ -207,12 +209,15 @@ export class Project {
     version?: string,
   ) {
     const packageJsonPath = path.resolve(projectPath, 'package.json');
-    const msg = `\n${reset}${lightBlue}> Verificando dependencias...${reset}
+    const msg = `
+${lightBlue}> Verificando dependencias...
 
-${reset}Proyecto : ${lightBlue}${packageJsonPath}${reset}
-${reset}Nombre   : ${lightBlue}${name || '-'}${reset}
-${reset}Versión  : ${lightBlue}${version || '-'}${reset}\n`;
-    process.stdout.write(msg);
+${reset}Proyecto : ${lightBlue}${packageJsonPath}
+${reset}Nombre   : ${lightBlue}${name || '-'}
+${reset}Versión  : ${lightBlue}${version || '-'}
+`;
+
+    printWithColor(msg);
   }
 
   private printSample() {
@@ -224,17 +229,17 @@ ${bold}Ejemplo:${reset}
   {
     "name": "my-project",
     "version": "1.0.0",
-  ${green}  "engines": {
-      "node": "^22",
-      "npm": ">=10"
-    }${reset}
+${green}    "engines": {
+${green}      "node": "^22",
+${green}      "npm": ">=10"
+${green}    }
   }
 
 ${reset}Paquetes soportados: ${green}${APP_LIST.join(', ')}${reset}
 ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usage${reset}\n
 `;
 
-    process.stdout.write(msg);
+    printWithColor(msg);
   }
 
   private printErrorCheck() {
@@ -260,7 +265,8 @@ ${reset}Referencia sobre Semver: ${reset}https://github.com/npm/node-semver#usag
 
   ${cyan}Verifica la versión instalada:
     ${versionMessages}
+
 `;
-    process.stdout.write(`${msg}\n${reset}`);
+    printWithColor(msg);
   }
 }
