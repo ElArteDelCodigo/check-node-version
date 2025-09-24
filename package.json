@@ -7,10 +7,11 @@
     "compile": "tsc --project tsconfig.json",
     "build": "npm run clean-build && npm run compile",
     "prepublishOnly": "npm run build",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src",
+    "lint": "eslint src tests",
+    "lint:fix": "eslint --fix src tests",
     "dev": "ts-node src/main.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:debug": "SHOW_TEST_STDOUT=1 npm run test"
   },
   "files": [
     "bin",

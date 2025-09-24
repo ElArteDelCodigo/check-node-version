@@ -1,8 +1,9 @@
 import { Project } from '../src/models/Project';
 import path from 'path';
+import { attachStdoutSpy } from './helpers/stdout';
 
-describe('testing Project.ts file', () => {
-  test('Initialize project', async () => {
+describe('pruebas de Project.ts', () => {
+  test('Inicializa el proyecto', async () => {
     const PROJECT_PATH = path.resolve(__dirname, 'app-sample/without-required');
     const project = new Project(PROJECT_PATH);
     expect(project.name).toBe('');
@@ -12,7 +13,7 @@ describe('testing Project.ts file', () => {
     expect(project.version).toBe('1.0.0');
   });
 
-  test('Empty project', async () => {
+  test('Proyecto vacío', async () => {
     const PROJECT_PATH = path.resolve(__dirname, 'app-sample/empty-project');
     const project = new Project(PROJECT_PATH);
     await project.initialize();
@@ -20,12 +21,9 @@ describe('testing Project.ts file', () => {
     expect(project.requiredApps.length).toBe(0);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
@@ -44,7 +42,7 @@ describe('testing Project.ts file', () => {
     }
   });
 
-  test('Without required', async () => {
+  test('Sin dependencias requeridas', async () => {
     const PROJECT_PATH = path.resolve(__dirname, 'app-sample/without-required');
     const project = new Project(PROJECT_PATH);
     await project.initialize();
@@ -52,12 +50,9 @@ describe('testing Project.ts file', () => {
     expect(project.requiredApps.length).toBe(0);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
@@ -76,7 +71,7 @@ describe('testing Project.ts file', () => {
     }
   });
 
-  test('Partial required', async () => {
+  test('Dependencias parciales', async () => {
     const PROJECT_PATH = path.resolve(__dirname, 'app-sample/partial-required');
     const project = new Project(PROJECT_PATH);
     await project.initialize();
@@ -84,12 +79,9 @@ describe('testing Project.ts file', () => {
     expect(project.requiredApps.length).toBe(2);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
@@ -107,7 +99,7 @@ describe('testing Project.ts file', () => {
     }
   });
 
-  test('Mismatched', async () => {
+  test('Dependencias incompatibles', async () => {
     const PROJECT_PATH = path.resolve(__dirname, 'app-sample/mismatched');
     const project = new Project(PROJECT_PATH);
     await project.initialize();
@@ -115,12 +107,9 @@ describe('testing Project.ts file', () => {
     expect(project.requiredApps.length).toBe(4);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
@@ -151,19 +140,16 @@ describe('testing Project.ts file', () => {
     }
   });
 
-  test('Full required', async () => {
+  test('Todas las dependencias requeridas', async () => {
     const PROJECT_PATH = path.resolve(__dirname, 'app-sample/full-required');
     const project = new Project(PROJECT_PATH);
     await project.initialize();
     expect(project.requiredApps.length).toBe(6);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
@@ -181,7 +167,7 @@ describe('testing Project.ts file', () => {
     }
   });
 
-  test('Required conditional', async () => {
+  test('Dependencias condicionales', async () => {
     const PROJECT_PATH = path.resolve(
       __dirname,
       'app-sample/required-conditional',
@@ -191,12 +177,9 @@ describe('testing Project.ts file', () => {
     expect(project.requiredApps.length).toBe(2);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
@@ -214,7 +197,7 @@ describe('testing Project.ts file', () => {
     }
   });
 
-  test('Required conditional with error', async () => {
+  test('Dependencias condicionales con error', async () => {
     const PROJECT_PATH = path.resolve(
       __dirname,
       'app-sample/required-conditional-with-error',
@@ -224,12 +207,9 @@ describe('testing Project.ts file', () => {
     expect(project.requiredApps.length).toBe(2);
 
     let output = '';
-    const writeSpy = jest
-      .spyOn(process.stdout, 'write')
-      .mockImplementation((chunk) => {
-        output += typeof chunk === 'string' ? chunk : String(chunk);
-        return true;
-      });
+    const writeSpy = attachStdoutSpy((text) => {
+      output += text;
+    });
 
     try {
       const { isValid, pathValid } = await project.checkVersion();
