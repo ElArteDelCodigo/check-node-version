@@ -1,3 +1,16 @@
+## 🚀 Versión 1.3.1 <small>(2025-09-24)</small>
+
+### 🐛 Fixes
+
+* corrige el renderizado de la salida y refactoriza stdout (9705d41)
+
+### 🛠 Chores
+
+* corrige el parseo de fechas en la generación del changelog (7c89c3a)
+
+### 🧪 Tests
+
+* actualiza pruebas unitarias para validar la impresión de colores por stdout (6a2c12d)
 ## 🚀 Versión 1.3.0 <small>(2025-09-10)</small>
 
 ### ✨ Features
