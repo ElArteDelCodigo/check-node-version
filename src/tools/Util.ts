@@ -18,6 +18,6 @@ export const OK = `${process.platform === 'linux' ? '\u2713' : 'ok'}`;
 export const FAIL = `${process.platform === 'linux' ? '\u2715' : 'x'}`;
 
 export const printWithColor = (msg: string) => {
-  const msgWithColor = msg.replace(/\n/g, `\n${reset}`);
+  const msgWithColor = msg.replace(/\n/g, `${reset}\n${reset}`);
   process.stdout.write(reset + msgWithColor + reset);
 };
