@@ -10,6 +10,7 @@ const ORDER = [
   '♻️ Refactor',
   '🎨 Style',
   '⚡ Performance',
+  '👽 Otros',
 ];
 
 // Mapeo de tipos Conventional Commits -> títulos bonitos
@@ -242,7 +243,7 @@ module.exports = {
       if (c.type && TYPE_MAP[c.type]) {
         c.type = TYPE_MAP[c.type];
       } else {
-        return false; // evita grupo "undefined" y commits fuera del preset
+        c.type = '👽 Otros';
       }
 
       // 4) short hash y autor
@@ -250,7 +251,9 @@ module.exports = {
       c.authorName = (c.author && c.author.name) || c.committerName || '';
 
       // 5) Subject: elimina emojis/shortcodes y normaliza
-      c.subject = stripEmojisAndShortcodes(c.subject || '');
+      // Si no hay subject (commits no estandar), usamos el header completo como fallback
+      const rawSubject = c.subject || c.header || '';
+      c.subject = stripEmojisAndShortcodes(rawSubject);
 
       // 6) Descarta si el subject quedó vacío (seguridad)
       if (!c.subject) return false;

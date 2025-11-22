@@ -15,7 +15,7 @@ npm version minor --no-git-tag-version
 Generar el changelog
 
 ```bash
-npx conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -r 0 --config ./changelog.config.cjs
+npx -y -p conventional-changelog-cli -p conventional-changelog-conventionalcommits conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -r 0 --config ./changelog.config.cjs
 ```
 
 Crear el commit del changelog con la nueva versión
