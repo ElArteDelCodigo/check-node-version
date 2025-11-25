@@ -38,21 +38,21 @@
   },
   "homepage": "https://github.com/ElArteDelCodigo/check-node-version#readme",
   "devDependencies": {
-    "@tsconfig/node16": "16.1.5",
+    "@tsconfig/node16": "16.1.8",
     "@types/jest": "30.0.0",
-    "@types/node": "24.6.2",
+    "@types/node": "24.10.1",
     "@types/semver": "7.7.1",
-    "@typescript-eslint/eslint-plugin": "8.45.0",
-    "@typescript-eslint/parser": "8.45.0",
-    "eslint": "9.36.0",
+    "@typescript-eslint/eslint-plugin": "8.48.0",
+    "@typescript-eslint/parser": "8.48.0",
+    "eslint": "9.39.1",
     "jest": "30.2.0",
     "sequelize": "6.37.7",
-    "ts-jest": "29.4.4",
+    "ts-jest": "29.4.5",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "semver": "7.7.2"
+    "semver": "7.7.3"
   },
   "engines": {
     "node": ">=8",
