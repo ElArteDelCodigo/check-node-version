@@ -230,8 +230,8 @@ ${bold}Ejemplo:${reset}
     "name": "my-project",
     "version": "1.0.0",
 ${green}    "engines": {
-${green}      "node": "^22",
-${green}      "npm": ">=10"
+${green}      "node": "^24",
+${green}      "npm": ">=11"
 ${green}    }
   }
 

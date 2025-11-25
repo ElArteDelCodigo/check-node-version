@@ -34,7 +34,7 @@ npm install -g @elartedelcodigo/check-node-version
 # Verifica
 check-node-version --version
 
-  1.3.1
+  1.3.3
 ```
 
 ## Configuración
@@ -46,8 +46,8 @@ Define los rangos de versiones en el `package.json` usando `engines` (semver):
   "name": "my-project",
   "version": "1.0.0",
   "engines": {
-    "node": "^22",
-    "npm": ">=10"
+    "node": "^24",
+    "npm": ">=11"
   }
 }
 ```
@@ -109,11 +109,11 @@ Archivo `package.json`
     "prestart": "check-node-version"
   },
   "engines": {
-    "node": "^22",
-    "npm": ">=10"
+    "node": "^24",
+    "npm": ">=11"
   },
   "dependencies": {
-    "@elartedelcodigo/check-node-version": "1.3.1"
+    "@elartedelcodigo/check-node-version": "1.3.3"
   }
 }
 ```

@@ -6,11 +6,11 @@ Guía breve para preparar entorno y probar cambios (no es para usuarios finales)
 
 | Herramienta   | Versión | Alcance |
 | ------------- | ------: | :-----: |
-| Node          | 22.19.0 | global  |
-| npm           |  10.9.3 | global  |
-| pnpm          | 10.15.1 | global  |
+| Node          | 24.11.1 | global  |
+| npm           |  11.6.2 | global  |
+| pnpm          | 10.23.0 | global  |
 | yarn          | 1.22.22 | global  |
-| pm2           |   6.0.8 | global  |
+| pm2           |  6.0.13 | global  |
 | sequelize-cli |   6.6.3 | global  |
 
 Comprobar versiones:
